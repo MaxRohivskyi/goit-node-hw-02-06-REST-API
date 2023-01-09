@@ -2,27 +2,30 @@ const express = require('express');
 const { tryCatchWrapper } = require('../../helpers');
 const {
   getContacts,
-  getContact,
-  deleteContact,
-  addNewContact,
+  getContactById,
+  removeContact,
+  addContact,
   updateContactById,
-} = require('../../controllers/contactsControllers');
+  updateStatusContact,
+} = require('../../controllers/contacts.controller');
 const { validateBody } = require('../../middlewares');
 const { contactSchema } = require('../../schemas');
 const router = express.Router();
 
 router.get('/', tryCatchWrapper(getContacts));
 
-router.get('/:contactId', tryCatchWrapper(getContact));
+router.get('/:contactId', tryCatchWrapper(getContactById));
 
-router.post('/', validateBody(contactSchema), tryCatchWrapper(addNewContact));
+router.post('/', validateBody(contactSchema), tryCatchWrapper(addContact));
 
-router.delete('/:contactId', tryCatchWrapper(deleteContact));
+router.delete('/:contactId', tryCatchWrapper(removeContact));
 
 router.put(
   '/:contactId',
   validateBody(contactSchema),
   tryCatchWrapper(updateContactById)
 );
+
+router.patch('/:contactId/favorite', tryCatchWrapper(updateStatusContact));
 
 module.exports = router;
