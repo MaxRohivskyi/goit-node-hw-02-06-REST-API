@@ -1,15 +1,7 @@
-const { HttpError } = require('../helpers');
-
-function validateBody(schema) {
-  return (req, res, next) => {
-    const { error } = schema.validate(req.body);
-    if (error) {
-      return next(HttpError(400, error.message));
-    }
-    return next();
-  };
-}
+const { validateBody } = require('./validateBody.middleware');
+const { auth } = require('./auth.middleware');
 
 module.exports = {
   validateBody,
+  auth,
 };
