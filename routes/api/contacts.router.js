@@ -1,16 +1,22 @@
 const express = require('express');
 const { tryCatchWrapper } = require('../../helpers');
+const { validateBody } = require('../../middlewares');
+const { contactSchema } = require('../../schemas');
+const { auth } = require('../../middlewares');
+const { contactsControllers } = require('../../controllers');
+
 const {
   getContacts,
   getContactById,
-  removeContact,
   addContact,
+  removeContact,
   updateContactById,
   updateStatusContact,
-} = require('../../controllers/contacts.controller');
-const { validateBody } = require('../../middlewares');
-const { contactSchema } = require('../../schemas');
+} = contactsControllers;
+
 const router = express.Router();
+
+router.use(tryCatchWrapper(auth));
 
 router.get('/', tryCatchWrapper(getContacts));
 
