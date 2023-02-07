@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
+mongoose.set('strictQuery', false);
+
 const app = require('./app');
 
 const { HOST_DB, PORT = 3000 } = process.env;
@@ -13,7 +15,10 @@ const main = async () => {
       throw new Error('HOST_DB not set!');
     }
 
-    await mongoose.connect(HOST_DB);
+    await mongoose.connect(HOST_DB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log(`Database connection successful${HOST_DB}`);
 
     app.listen(PORT, err => {
