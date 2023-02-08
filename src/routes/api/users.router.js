@@ -13,6 +13,8 @@ const {
   getCurrentUser,
   updateSubscription,
   updateAvatar,
+  getVerificationUser,
+  reVerification,
 } = usersControllers;
 
 const router = express.Router();
@@ -33,5 +35,9 @@ router.patch(
   upload.single('avatar'),
   tryCatchWrapper(updateAvatar)
 );
+
+router.get('/verify/:verificationToken', tryCatchWrapper(getVerificationUser));
+
+router.post('/verify', tryCatchWrapper(reVerification));
 
 module.exports = router;

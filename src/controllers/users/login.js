@@ -8,7 +8,7 @@ const login = async (req, res, next) => {
 
   const { JWT_SECRET } = process.env;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, verify: true });
   if (!user) {
     throw new Unauthorized(`User with this ${email} does not exists`);
   }
